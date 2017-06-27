@@ -1,4 +1,4 @@
-export default class PixelManipulationCommand {
+class PixelOperationCommand {
     /**
      * @param {CanvasWrapper} canvasWrapper
      * @param {Function} pixelOperation
@@ -6,15 +6,17 @@ export default class PixelManipulationCommand {
     constructor(canvasWrapper, pixelOperation) {
         this.canvasWrapper = canvasWrapper;
         this.pixelOperation = pixelOperation;
-        this.oldImageData = null;
+        this.oldImage = null;
     }
 
     execute() {
-        this.oldImageData = this.canvasWrapper.getImageData();
+        this.oldImage = this.canvasWrapper.getImage();
         this.canvasWrapper.applyOperation(this.pixelOperation);
     }
 
     undo() {
-        this.canvasWrapper.putImageData(this.oldImageData);
+        this.canvasWrapper.putImage(this.oldImage);
     }
 }
+
+export default PixelOperationCommand;

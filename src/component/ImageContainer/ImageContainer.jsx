@@ -1,14 +1,14 @@
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import './ImageContainer.css';
 
-export default class ImageContainer extends Component {
+class ImageContainer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isImageLoaded: false
+            isImageUploaded: true
         }
-
-        this.onImageLoad = props.onImageLoad;
     }
 
     readFile = (fileInfo) => {
@@ -20,9 +20,10 @@ export default class ImageContainer extends Component {
 
         fileReader.onload = (event) => {
             const image = new Image();
-            image.onload = () => this.onImageLoad(image, fileInfo);
             image.src = event.target.result;
-            this.setState({isImageLoaded: true});
+            image.name = fileInfo.name;
+            image.onload = () => this.props.onImageLoad(image);
+            this.setState({isImageUploaded: false});
         };
 
         fileReader.readAsDataURL(fileInfo);
@@ -42,15 +43,15 @@ export default class ImageContainer extends Component {
     }
 
     render() {
-        const {isImageLoaded} = this.state;
+        const {isImageUploaded} = this.state;
 
         return (
             <div className='image-container'
                  onDragOver={this.preventLoadFileAsNewPage}
                  onDrop={this.onDrop}
             >
-                <canvas ref='canvas'></canvas>
-                {isImageLoaded || <p className="help-message">Drop an image here or <label htmlFor="image-upload">select manually</label></p>}
+                <canvas ref='canvas'/>
+                {isImageUploaded && <p className="help-message">Drop an image here or <label htmlFor="image-upload">select manually</label></p>}
                 <form encType="multipart/form-data">
                     <input
                         type="file"
@@ -63,3 +64,9 @@ export default class ImageContainer extends Component {
         )
     }
 }
+
+ImageContainer.propTypes = {
+    onImageLoad: PropTypes.func
+};
+
+export default ImageContainer;
