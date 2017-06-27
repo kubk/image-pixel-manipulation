@@ -1,50 +1,85 @@
-export default class CanvasWrapper {
+class CanvasWrapper {
     /**
      * @param {HTMLCanvasElement} canvas
      */
     constructor(canvas) {
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
+        this.dx = 0;
+        this.dy = 0;
     }
 
     /**
-     * @param {HTMLImageElement} img
+     * @param {HTMLImageElement} image
      */
-    drawImage(img) {
-        const dx = 0, dy = 0;
-        this.canvas.width = img.width;
-        this.canvas.height = img.height;
-        this.context.drawImage(img, dx, dy, img.width, img.height);
+    drawImageElement(image) {
+        this.canvas.width = image.width;
+        this.canvas.height = image.height;
+        this.context.drawImage(
+            image,
+            this.dx,
+            this.dy,
+            image.width,
+            image.height
+        );
     }
 
     /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/ImageData
      * @return {ImageData}
      */
-    getImageData() {
-        const upperLeftX = 0, upperLeftY = 0;
-        return this.context.getImageData(upperLeftX, upperLeftY, this.canvas.width, this.canvas.height);
+    getImage() {
+        return this.context.getImageData(
+            this.dx,
+            this.dy,
+            this.canvas.width,
+            this.canvas.height
+        );
     }
 
     /**
-     * @param {ImageData} imageData
+     * @param {ImageData} image
      */
-    putImageData(imageData) {
-        const dx = 0, dy = 0;
-        this.context.putImageData(imageData, dx, dy);
+    putImage(image) {
+        this.context.putImageData(image, this.dx, this.dy);
     }
 
     /**
      * @param {Function} pixelOperation
      */
     applyOperation(pixelOperation) {
-        const imageData = this.getImageData();
-        pixelOperation(imageData.data);
-        this.putImageData(imageData);
+        const image = this.getImage();
+        pixelOperation(image.data);
+        this.putImage(image);
     }
 
-    clear() {
-        const startX = 0, startY = 0;
-        this.context.clearRect(startX, startY, this.canvas.width, this.canvas.height);
+    flipVertical() {
+        const horizontalScalingFactor = 1;
+        const verticalScalingFactor = -1;
+        this.context.scale(horizontalScalingFactor, verticalScalingFactor);
+        this.context.drawImage(this.canvas, 0, -this.canvas.height);
+        this.resetDefaultTransformation();
+    }
+
+    flipHorizontal() {
+        const horizontalScalingFactor = -1;
+        const verticalScalingFactor = 1;
+        this.context.scale(horizontalScalingFactor, verticalScalingFactor);
+        this.context.drawImage(
+            this.canvas,
+            this.dx,
+            this.dy,
+            -this.canvas.width,
+            this.canvas.height
+        );
+        this.resetDefaultTransformation();
+    }
+
+    /**
+     * @private
+     */
+    resetDefaultTransformation() {
+        this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
 
     /**
@@ -54,3 +89,5 @@ export default class CanvasWrapper {
         return this.canvas.toDataURL();
     }
 }
+
+export default CanvasWrapper;

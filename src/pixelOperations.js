@@ -14,20 +14,8 @@ export function invertColors(pixels) {
  */
 export function grayscale(pixels) {
     for (let i = 0; i < pixels.length; i += 4) {
-        let avg = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+        const avg = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
         pixels[i] = pixels[i + 1] = pixels[i + 2] = avg;
-    }
-}
-
-/**
- * @param {Uint8ClampedArray} pixels
- */
-export function flipVertical(pixels) {
-    for (let i = 0; i < pixels.length / 2; i += 4) {
-        let lastIndex = pixels.length - 1 - i;
-        [pixels[i], pixels[lastIndex - 3]] = [pixels[lastIndex - 3], pixels[i]];
-        [pixels[i + 1], pixels[lastIndex - 2]] = [pixels[lastIndex - 2], pixels[i + 1]];
-        [pixels[i + 2], pixels[lastIndex - 1]] = [pixels[lastIndex - 1], pixels[i + 2]];
     }
 }
 
@@ -45,10 +33,28 @@ export function noise(factor, pixels) {
 }
 
 /**
+ * @param {Uint8ClampedArray} pixels
+ */
+export function sepia(pixels) {
+    // Red - sum total of 18.9% blue, 76.9% green, 39.3% red
+    const getRed = (r, g, b) => r * 0.189 + g * 0.769 + b * 0.393;
+    // Green - sum total of 16.8% blue, 68.6% green, 34.9% red
+    const getGreen = (r, g, b) => r * 0.168 + g * 0.686 + b * 0.349;
+    // Blue - sum total of 13.1% blue, 53.4% green, 27.2% red
+    const getBlue = (r, g, b) => r * 0.131 + g * 0.534 + b * 0.272;
+
+    for (let i = 0; i < pixels.length; i += 4) {
+        pixels[i] = getRed(pixels[i], pixels[i + 1], pixels[i + 2]);
+        pixels[i + 1] = getGreen(pixels[i], pixels[i + 1], pixels[i + 2]);
+        pixels[i + 2] = getBlue(pixels[i], pixels[i + 1], pixels[i + 2]);
+    }
+}
+
+/**
  * @param {int} factor
  * @param {Uint8ClampedArray} pixels
  */
-export function changeBrightness(factor, pixels) {
+export function brightness(factor, pixels) {
     for (let i = 0; i < pixels.length; i += 4) {
         pixels[i] += factor;
         pixels[i + 1] += factor;
@@ -56,19 +62,16 @@ export function changeBrightness(factor, pixels) {
     }
 }
 
-const getBrightness = (r, g, b) => 0.299 * r + 0.587 * g + 0.114 * b;
-
 /**
- * @param {int} threshold
- * @param {Rgb} darkColor
- * @param {Rgb} lightColor
+ * @param {number} rSaturate
+ * @param {number} gSaturate
+ * @param {number} bSaturate
  * @param {Uint8ClampedArray} pixels
  */
-export function binarisation(threshold, darkColor, lightColor, pixels) {
+export function saturate(rSaturate, gSaturate, bSaturate, pixels) {
     for (let i = 0; i < pixels.length; i += 4) {
-        const brightness = getBrightness(pixels[i], pixels[i + 1], pixels[i + 2]);
-        const color = (brightness > threshold) ? lightColor : darkColor;
-
-        [pixels[i], pixels[i + 1], pixels[i + 2]] = color.toArray();
+        pixels[i] *= rSaturate;
+        pixels[i + 1] *= gSaturate;
+        pixels[i + 2] *= bSaturate;
     }
 }
