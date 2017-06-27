@@ -1,27 +1,27 @@
-import PropTypes from 'prop-types';
-import React, {Component} from 'react';
-import './RangeSlider.css';
+import PropTypes from 'prop-types'
+import React, {Component} from 'react'
+import './RangeSlider.css'
 
-class RangeSlider extends Component {
+export default class RangeSlider extends Component {
     handleChange = (event) => {
-        const {max, min, updateValue} = this.props;
-        const inputNumber = +event.target.value;
+        const {max, min, updateValue} = this.props
+        const inputNumber = +event.target.value
 
         let displayNumber;
         if (inputNumber > max) {
-            displayNumber = max;
+            displayNumber = max
         } else if (inputNumber < min) {
-            displayNumber = min;
+            displayNumber = min
         } else {
-            displayNumber = inputNumber;
+            displayNumber = inputNumber
         }
 
-        updateValue(displayNumber);
+        updateValue(displayNumber)
     }
 
     render() {
-        const {min, max, step, value} = this.props;
-        const inputClass = this.props.inputClass || 'range-slider__range';
+        const {min, max, step, value} = this.props
+        const inputClass = this.props.inputClass || 'range-slider__range'
 
         return (
           <div className="range-slider">
@@ -39,7 +39,7 @@ class RangeSlider extends Component {
             />
             <span className="range-slider__bound">{max}</span>
           </div>
-        );
+        )
     }
 }
 
@@ -50,6 +50,4 @@ RangeSlider.propTypes = {
     value: PropTypes.number.isRequired,
     updateValue: PropTypes.func.isRequired,
     inputClass: PropTypes.string
-};
-
-export default RangeSlider;
+}

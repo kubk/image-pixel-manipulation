@@ -1,24 +1,22 @@
-class FlipCanvasCommand {
+export default class FlipCanvasCommand {
     /**
      * @param {CanvasWrapper} canvasWrapper
-     * @param {bool} isFlipVertical
+     * @param {boolean} isFlipVertical
      */
     constructor(canvasWrapper, isFlipVertical) {
-        this.canvasWrapper = canvasWrapper;
-        this.isFlipVertical = isFlipVertical;
+        this.canvasWrapper = canvasWrapper
+        this.isFlipVertical = isFlipVertical
     }
 
     execute() {
         if (this.isFlipVertical) {
-            this.canvasWrapper.flipVertical();
+            this.canvasWrapper.flipVertical()
         } else {
-            this.canvasWrapper.flipHorizontal();
+            this.canvasWrapper.flipHorizontal()
         }
     }
 
     undo() {
-        this.execute();
+        this.execute()
     }
 }
-
-export default FlipCanvasCommand;

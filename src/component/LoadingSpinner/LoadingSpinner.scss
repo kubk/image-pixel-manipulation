@@ -1,0 +1,9 @@
+@import '../shared.scss';
+
+.loading-spinner {
+    @include center-vertical-horizontal;
+
+    i.fa-spinner {
+        font-size: 4em;
+    }
+}

@@ -1,0 +1,16 @@
+@mixin center-vertical-horizontal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+$toolbar-bg: rgba(0, 0, 0, .7);
+$toolbar: #fff;
+$nav-bg: #666;
+$accent-color: #0074d9;
+$img-container-bg: #333;
+$dialog-button: #3071A9;
+$popup-border: #aaa;
+$red-track: #EA5353;
+$green-track: #3DA63D;

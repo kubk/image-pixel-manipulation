@@ -1,7 +1,7 @@
-import React from 'react';
-import './Toolbar.css';
+import React from 'react'
+import './Toolbar.css'
 
-const Toolbar = ({
+export default function Toolbar ({
     onGreyScale,
     onInvertColors,
     onUndo,
@@ -12,8 +12,8 @@ const Toolbar = ({
     onBrightness,
     onSepia,
     onSaturate
-}) =>
-    <div className="toolbar">
+}) {
+    return <div className="toolbar">
         <button className="toolbar__button" title="Effects">
             <span className="fa fa-magic"/>
         </button>
@@ -42,6 +42,5 @@ const Toolbar = ({
         <button className="toolbar__button" title="Flip horizontal" onClick={onFlipHorizontal}>
             <span className="fa fa-arrows-h"/>
         </button>
-    </div>;
-
-export default Toolbar;
+    </div>
+}

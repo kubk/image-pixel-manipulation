@@ -11,13 +11,16 @@
     "enzyme": "^2.9.1",
     "prettier": "^1.4.4",
     "react-scripts": "0.9.5",
+    "node-sass-chokidar": "^0.0.3",
     "react-test-renderer": "^15.6.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+	"start": "react-scripts start",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+	"build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "fixPaths": "sed -i 's/\\/static/static/g' build/index.html",
     "prettier": "node_modules/prettier/bin/prettier.js --tab-width 4 --single-quote --trailing-comma es5 --write \"src/**/*.js\""
   }

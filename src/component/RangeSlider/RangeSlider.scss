@@ -1,0 +1,121 @@
+@import '../shared.scss';
+
+.range-slider {
+    padding: 0 5px;
+
+    &__bound {
+        padding: 0 4px;
+    }
+
+    &__bound,
+    &__input
+    {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    // We can't comma-separate these type of selectors
+    input[type=range]::-webkit-slider-runnable-track {
+        height: 8px;
+        cursor: pointer;
+    }
+
+    input[type=range]::-moz-range-track {
+        height: 8px;
+        cursor: pointer;
+    }
+
+    &__range::-moz-range-track {
+        background: $dialog-button;
+    }
+
+    &__range::-webkit-slider-runnable-track {
+        background: $dialog-button;
+    }
+
+    &__range--red::-moz-range-track {
+        background: $red-track;
+    }
+
+    &__range--red::-webkit-slider-runnable-track {
+        background: $red-track;
+    }
+
+    &__range--green::-moz-range-track {
+        background: $green-track;
+    }
+
+    &__range--green::-webkit-slider-runnable-track {
+        background: $green-track;
+    }
+
+    &__range--blue::-moz-range-track {
+        background: $dialog-button;
+    }
+
+    &__range--blue::-webkit-slider-runnable-track {
+        background: $dialog-button;
+    }
+
+    &__value {
+        color: $dialog-button;
+        display: block;
+        margin: 10px;
+        font-size: 1.3em;
+    }
+
+    input[type=range] {
+        -webkit-appearance: none;
+        background: transparent;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+    }
+
+    input[type=range]:focus {
+        // Removes the blue border
+        outline: none;
+    }
+
+    input[type=range]::-webkit-slider-thumb
+    {
+        border: 1px solid #000;
+        height: 20px;
+        width: 10px;
+        background: $toolbar;
+        cursor: pointer;
+    }
+
+    input[type=range]::-moz-range-thumb
+    {
+        height: 20px;
+        width: 10px;
+        border-radius: 0;
+        background: $toolbar;
+        cursor: pointer;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        margin-top: -7px;
+    }
+
+    input[type=range] {
+        // Remove border in FF
+        border: 0;
+    }
+}
+
+@media (max-width: 470px) {
+    // Only for mobile FF
+    @-moz-document url-prefix() {
+        .range-slider input[type=range] {
+            width: 110px;
+        }
+
+        .range-slider {
+            width: 200px;
+        }
+    }
+}

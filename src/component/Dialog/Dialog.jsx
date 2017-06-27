@@ -1,19 +1,19 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import Draggable from 'react-draggable';
-import './Dialog.css';
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import Draggable from 'react-draggable'
+import './Dialog.css'
 
-class Dialog extends Component {
+export default class Dialog extends Component {
     onDragStart(event) {
         // Prevent dialog dragging when target is an input tag
         if (event.target.tagName === 'INPUT') {
-            return false;
+            return false
         }
     }
 
     onOk = () => {
-        this.props.onOk();
-        this.props.onCancel();
+        this.props.onOk()
+        this.props.onCancel()
     }
 
     render() {
@@ -25,18 +25,17 @@ class Dialog extends Component {
                   <div className="pop-up__body">
                     <p className="pop-up__text">{text}</p>
                     {this.props.children}
-                    <button className="pop-up__button" onClick={this.onOk}>Ok</button>
-                    <button className="pop-up__button" onClick={onCancel}>Close</button>
+                    <button title="Ok" className="pop-up__button" onClick={this.onOk}>Ok</button>
+                    <button title="Cancel" className="pop-up__button" onClick={onCancel}>Close</button>
                   </div>
                 </Draggable>
             </div>
-        );
+        )
     }
 }
 
 Dialog.propTypes = {
+    text: PropTypes.string,
     onOk: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-};
-
-export default Dialog;
+}

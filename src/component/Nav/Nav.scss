@@ -1,0 +1,24 @@
+@import '../shared.scss';
+
+.nav {
+    background-color: $nav-bg;
+    // Prevent navbar from callapsing when it has floated children
+    overflow: hidden;
+
+    &__item {
+        text-decoration: none;
+        color: $toolbar;
+        padding: 15px;
+        float: left;
+        font-size: 1em;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $accent-color;
+        }
+
+        &--right {
+            float: right;
+        }
+    }
+}

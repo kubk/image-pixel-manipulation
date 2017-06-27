@@ -1,15 +1,15 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import './Nav.css';
+import PropTypes from 'prop-types'
+import React from 'react'
+import './Nav.css'
 
-const Nav = ({handleSave}) =>
-    <nav className='nav'>
+export default function Nav({ handleSave }) {
+    return <nav className='nav'>
         <label className='nav__item' htmlFor='image-upload' title='Upload an image'>
             <span className='fa fa-upload'/>
         </label>
         <a
             className='nav__item nav__item--right'
-            href='https://github.com/hexv'
+            href='https://github.com/kubk/image-pixel-manipulation'
             target='_blank'
             title='Github repo'
         >
@@ -23,10 +23,9 @@ const Nav = ({handleSave}) =>
         >
             <span className='fa fa-download'/>
         </a>
-    </nav>;
+    </nav>
+}
 
 Nav.propTypes = {
     handleSave: PropTypes.func
-};
-
-export default Nav;
+}

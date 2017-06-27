@@ -1,0 +1,56 @@
+@import '../shared.scss';
+
+.toolbar {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $toolbar-bg;
+
+    &__button {
+        display: block;
+        height: 32px;
+        width: 32px;
+        color: $toolbar;
+        background-color: transparent;
+        cursor: pointer;
+        float: left;
+        text-align: center;
+        border-width: 0;
+
+        // Remove dotted outline on buttons
+        &::-moz-focus-inner {
+            border: 0;
+        }
+
+        &:focus + .drop-up {
+            display: block;
+        }
+    }
+
+    .drop-up {
+        position: absolute;
+        left: 0;
+        bottom: 100%;
+        list-style-type: none;
+        z-index: 2017;
+        display: none;
+
+        &__item {
+            padding: 8px;
+            font-size: 0.9em;
+            background-color: $toolbar-bg;
+            color: $toolbar;
+            text-align: left;
+        }
+    }
+
+}
+
+.toolbar__button:hover, .drop-up .drop-up__item:hover {
+    background-color: $accent-color;
+}
+
+.toolbar__button, .drop-up__item {
+    z-index: 2017;
+}
