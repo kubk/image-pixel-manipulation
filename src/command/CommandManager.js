@@ -1,29 +1,27 @@
-/**
- * All user actions in the app are implemented as command objects.
- * CommandManager keeps a stack of the most recently executed commands.
- */
-export default class CommandManager {
+class CommandManager {
     /**
      * @param {number} undoLimit
-     * @param {Function} onExecute
-     * @param {Function} onUndo
      */
     constructor(undoLimit) {
-        if (undoLimit < 1) {
-            throw new Error('Argument must be a positive');
+        if (typeof undoLimit !== 'number' || undoLimit < 1) {
+            throw new Error('Argument must be a positive integer');
         }
 
         this.undoLimit = undoLimit;
         this.commands = [];
-        this.lastPop = null;
+        this.pointer = -1;
     }
 
     /**
-     * @param {Command} command
+     * @param command
      */
     push(command) {
-        if (this.commands.length >= this.undoLimit) {
+        if (this.commands.length === this.undoLimit) {
             this.commands.shift();
+            this.pointer = this.commands.length;
+        } else {
+            this.pointer++;
+            this.commands.splice(this.pointer);
         }
 
         command.execute();
@@ -32,15 +30,15 @@ export default class CommandManager {
 
     undo() {
         if (this.canUndo()) {
-            const topCommand = this.commands.pop();
-            topCommand.undo();
-            this.lastPop = topCommand;
+            this.commands[this.pointer].undo();
+            this.pointer--;
         }
     }
 
     redo() {
         if (this.canRedo()) {
-            this.push(this.lastPop);
+            this.pointer++;
+            this.commands[this.pointer].execute();
         }
     }
 
@@ -48,13 +46,20 @@ export default class CommandManager {
      * @return {boolean}
      */
     canUndo() {
-        return this.commands.length > 0;
+        return this.pointer > -1;
     }
 
     /**
      * @return {boolean}
      */
     canRedo() {
-        return !! this.lastPop;
+        return this.pointer < this.commands.length - 1;
+    }
+
+    clearHistory() {
+        this.pointer = -1;
+        this.commands = [];
     }
 }
+
+export default CommandManager;
