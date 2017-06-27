@@ -3,18 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "lodash.throttle": "^4.1.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-draggable": "^2.2.6"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "enzyme": "^2.9.1",
+    "prettier": "^1.4.4",
+    "react-scripts": "0.9.5",
+    "react-test-renderer": "^15.6.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "fixPaths": "sed -i 's/\\/static/static/g' build/index.html",
+    "prettier": "node_modules/prettier/bin/prettier.js --tab-width 4 --single-quote --trailing-comma es5 --write \"src/**/*.js\""
   }
 }
