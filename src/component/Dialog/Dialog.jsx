@@ -25,8 +25,8 @@ class Dialog extends Component {
                   <div className="pop-up__body">
                     <p className="pop-up__text">{text}</p>
                     {this.props.children}
-                    <button className="pop-up__button" onClick={this.onOk}>Ok</button>
-                    <button className="pop-up__button" onClick={onCancel}>Close</button>
+                    <button title="Ok" className="pop-up__button" onClick={this.onOk}>Ok</button>
+                    <button title="Cancel" className="pop-up__button" onClick={onCancel}>Close</button>
                   </div>
                 </Draggable>
             </div>
@@ -35,6 +35,7 @@ class Dialog extends Component {
 }
 
 Dialog.propTypes = {
+    text: PropTypes.string,
     onOk: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
 };

@@ -7,7 +7,7 @@ class ImageContainer extends Component {
         super(props);
 
         this.state = {
-            isImageUploaded: true
+            isImageUploaded: false
         }
     }
 
@@ -16,14 +16,14 @@ class ImageContainer extends Component {
             return alert('Please upload an image');
         }
 
-        const fileReader = new FileReader();
+        const {fileReader} = this.props;
 
         fileReader.onload = (event) => {
             const image = new Image();
             image.src = event.target.result;
             image.name = fileInfo.name;
             image.onload = () => this.props.onImageLoad(image);
-            this.setState({isImageUploaded: false});
+            this.setState({isImageUploaded: true});
         };
 
         fileReader.readAsDataURL(fileInfo);
@@ -51,7 +51,7 @@ class ImageContainer extends Component {
                  onDrop={this.onDrop}
             >
                 <canvas ref='canvas'/>
-                {isImageUploaded && <p className="help-message">Drop an image here or <label htmlFor="image-upload">select manually</label></p>}
+                {isImageUploaded || <p className="help-message">Drop an image here or <label htmlFor="image-upload">select manually</label></p>}
                 <form encType="multipart/form-data">
                     <input
                         type="file"
@@ -66,7 +66,8 @@ class ImageContainer extends Component {
 }
 
 ImageContainer.propTypes = {
-    onImageLoad: PropTypes.func
+    onImageLoad: PropTypes.func,
+    fileReader: PropTypes.object.isRequired
 };
 
 export default ImageContainer;

@@ -8,15 +8,15 @@ describe('<Toolbar/>', () => {
     });
 
     it('triggers undo and redo', () => {
-        const undoSpy = jest.fn();
-        const redoSpy = jest.fn();
-        const toolbarProps = {onUndo: undoSpy, onRedo: redoSpy};
+        const onUndo = jest.fn();
+        const onRedo = jest.fn();
+        const toolbarProps = {onUndo, onRedo};
 
         const toolbar = shallow(<Toolbar {...toolbarProps}/>);
         toolbar.find('[title="Undo"]').simulate('click');
-        expect(undoSpy).toBeCalled();
+        expect(onUndo).toBeCalled();
 
         toolbar.find('[title="Redo"]').simulate('click');
-        expect(redoSpy).toBeCalled();
+        expect(onRedo).toBeCalled();
     });
 });

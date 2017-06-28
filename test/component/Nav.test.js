@@ -8,9 +8,9 @@ describe('<Nav/>', () => {
     });
 
     it('triggers handleSave on click', () => {
-        const handleSaveSpy = jest.fn();
-        const nav = shallow(<Nav handleSave={handleSaveSpy}/>);
+        const handleSave = jest.fn();
+        const nav = shallow(<Nav handleSave={handleSave}/>);
         nav.find('[name="download"]').simulate('click');
-        expect(handleSaveSpy).toBeCalled();
+        expect(handleSave).toBeCalled();
     });
 });

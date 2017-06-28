@@ -91,7 +91,7 @@ class App extends Component {
         return (
             <div id='app-container'>
                 <Nav handleSave={this.downloadImage}/>
-                <ImageContainer onImageLoad={this.onImageLoad} ref='imageContainer'/>
+                <ImageContainer onImageLoad={this.onImageLoad} ref='imageContainer' fileReader={new FileReader()}/>
                 <LoadingSpinner isLoading={isSpinnerLoading}/>
                 <Toolbar {...this.getToolbarProps()}/>
 
