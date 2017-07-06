@@ -9,7 +9,7 @@ const Nav = ({handleSave}) =>
         </label>
         <a
             className='nav__item nav__item--right'
-            href='https://github.com/hexv'
+            href='https://github.com/kubk/image-pixel-manipulation'
             target='_blank'
             title='Github repo'
         >

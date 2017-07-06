@@ -8,10 +8,16 @@ User-initiated changes are undoable and redoable. This functionality is implemen
 
 ReactJS used as a view layer, because it proposes a simple way to create composable components. Tests are written using Jest and Enzyme.
 
+## Demo
+Checkout [demo](https://kubk.github.io/image-pixel-manipulation/build) in your browser.
+
 ## Installation
-1. `git clone`
+1. `git clone https://github.com/kubk/image-pixel-manipulation`
 2. `yarn install`
 3. `yarn start`
+
+## Example
+![example](out.gif)
 
 ## Testing
 Run tests using `yarn test`
