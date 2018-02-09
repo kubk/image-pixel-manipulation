@@ -1,4 +1,4 @@
-# image-pixel-manipulation [![Build Status](https://travis-ci.org/kubk/image-pixel-manipulation.svg?branch=master)](https://travis-ci.org/kubk/image-pixel-manipulation) 
+# image-pixel-manipulation [![Build Status](https://api.travis-ci.org/kubk/image-pixel-manipulation.svg?branch=master)](https://travis-ci.org/kubk/image-pixel-manipulation) 
 
 Allows to apply different effects/filters on images.
 
