@@ -1,4 +1,4 @@
-import * as effect from '../src/pixelOperations'
+import * as filters from '../src/canvas/filters'
 
 /**
  * @param {int[]} received
@@ -19,6 +19,29 @@ describe('Pixel manipulation commands', () => {
         40, 40, 40, 255, // pixel 3
         50, 50, 50, 255, // pixel 4
     ]
+    const width = 2, height = 2
+
+    it('flip horizontal works correctly', () => {
+        const expected = [
+            30, 30, 30, 255, // pixel 2
+            20, 20, 20, 255, // pixel 1
+            50, 50, 50, 255, // pixel 4
+            40, 40, 40, 255, // pixel 3
+        ]
+
+        pixelsAreEqual(given, expected, filters.flipHorizontal.bind(null, width, height))
+    })
+
+    it('flip vertical works correctly', () => {
+        const expected = [
+            40, 40, 40, 255, // pixel 3
+            50, 50, 50, 255, // pixel 4
+            20, 20, 20, 255, // pixel 1
+            30, 30, 30, 255, // pixel 2
+        ]
+
+        pixelsAreEqual(given, expected, filters.flipVertical.bind(null, width, height))
+    })
 
     it('invertColors works correctly', () => {
         const expected = [
@@ -28,7 +51,7 @@ describe('Pixel manipulation commands', () => {
             205, 205, 205, 255,
         ]
 
-        pixelsAreEqual(given, expected, effect.invertColors)
+        pixelsAreEqual(given, expected, filters.invertColors)
     })
 
     it('greyscale works correctly', () => {
@@ -39,7 +62,7 @@ describe('Pixel manipulation commands', () => {
             50, 50, 50, 255,
         ]
 
-        pixelsAreEqual(given, expected, effect.grayscale)
+        pixelsAreEqual(given, expected, filters.greyscale)
     })
 
     it('brightness works correctly', () => {
@@ -52,7 +75,7 @@ describe('Pixel manipulation commands', () => {
 
         const factor = 35
 
-        pixelsAreEqual(given, expected, effect.brightness.bind(null, factor))
+        pixelsAreEqual(given, expected, filters.brightness.bind(null, factor))
     })
 
     it('saturation works correctly', () => {
@@ -65,13 +88,13 @@ describe('Pixel manipulation commands', () => {
 
         const rSaturate = 0.5, gSaturate = 1, bSaturate = 1
 
-        pixelsAreEqual(given, expected, effect.saturate.bind(null, rSaturate, gSaturate, bSaturate))
+        pixelsAreEqual(given, expected, filters.saturate.bind(null, rSaturate, gSaturate, bSaturate))
     })
 
     it('noise works correctly', () => {
         const noiseFactor = 5
         const givenClamped = new Uint8ClampedArray(given)
-        effect.noise(noiseFactor, givenClamped)
+        filters.noise(noiseFactor, givenClamped)
 
         expect(givenClamped[0]).toBeLessThanOrEqual(given[0] + noiseFactor)
         expect(givenClamped[0]).toBeGreaterThan(given[0])

@@ -4,10 +4,11 @@ import './RangeSlider.css'
 
 export default class RangeSlider extends Component {
     handleChange = (event) => {
-        const {max, min, updateValue} = this.props
+        const { max, min, updateValue } = this.props
         const inputNumber = +event.target.value
 
         let displayNumber;
+
         if (inputNumber > max) {
             displayNumber = max
         } else if (inputNumber < min) {
@@ -20,25 +21,25 @@ export default class RangeSlider extends Component {
     }
 
     render() {
-        const {min, max, step, value} = this.props
+        const { min, max, step, value } = this.props
         const inputClass = this.props.inputClass || 'range-slider__range'
 
         return (
-          <div className="range-slider">
-            <span className="range-slider__value">{value}</span>
-            <span className="range-slider__bound">{min}</span>
-            <input
-              className={inputClass}
-              type='range'
-              name='slider'
-              min={min}
-              max={max}
-              step={step}
-              value={value}
-              onChange={this.handleChange}
-            />
-            <span className="range-slider__bound">{max}</span>
-          </div>
+            <div className="range-slider">
+                <span className="range-slider__value">{value}</span>
+                <span className="range-slider__bound">{min}</span>
+                <input
+                    className={inputClass}
+                    type='range'
+                    name='slider'
+                    min={min}
+                    max={max}
+                    step={step}
+                    value={value}
+                    onChange={this.handleChange}
+                />
+                <span className="range-slider__bound">{max}</span>
+            </div>
         )
     }
 }

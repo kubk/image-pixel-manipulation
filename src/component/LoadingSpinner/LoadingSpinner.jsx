@@ -1,17 +1,23 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import './LoadingSpinner.css'
+import { connect } from 'react-redux'
 
-export default function LoadingSpinner({ isLoading }) {
-    if (!isLoading) { return null }
+const LoadingSpinner = ({ isImageDownloading }) => {
+    if (!isImageDownloading) {
+        return null
+    }
 
     return (
-        <div className="loading-spinner">
+        isImageDownloading && <div className="loading-spinner">
             <i className="fa fa-spinner fa-spin"/>
         </div>
     )
 }
 
-LoadingSpinner.propTypes = {
-    isLoading: PropTypes.bool.isRequired
-}
+export default connect(
+    state => ({
+        isImageDownloading: state.canvas.present.isImageDownloading
+    })
+)(LoadingSpinner)
+
+

@@ -1,12 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './component/App/App'
-import CommandManager from './command/CommandManager'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { canvasMiddleware } from './canvas/canvasMiddleware'
+import canvas from './reducers/canvas'
+import popup from './reducers/popup'
+import undoable, { excludeAction } from 'redux-undo'
 
-const undoLimit = 5;
-const commandManager = new CommandManager(undoLimit)
+const reducer = combineReducers({
+    canvas: undoable(canvas, {
+        limit: 10,
+        debug: true,
+        filter: excludeAction('IMAGE_DOWNLOADING')
+    }),
+    popup
+})
+
+const store = createStore(reducer, applyMiddleware(canvasMiddleware))
 
 ReactDOM.render(
-    <App commandManager={commandManager} />,
+    <Provider store={store}>
+        <App/>
+    </Provider>,
     document.getElementById('root')
 )

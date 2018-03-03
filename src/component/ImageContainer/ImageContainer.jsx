@@ -1,10 +1,16 @@
-import PropTypes from 'prop-types';
-import React, {Component} from 'react';
-import './ImageContainer.css';
+import React, {Component} from 'react'
+import './ImageContainer.css'
+import { connect } from 'react-redux'
+import { imageUploaded } from '../../actions/index'
 
-export default class ImageContainer extends Component {
-    state = {
-        isImageUploaded: false
+class ImageContainer extends Component {
+    onDrop = (event) => {
+        event.preventDefault()
+        this.readFile(event.dataTransfer.files[0])
+    }
+
+    onInputChange = (event) => {
+        this.readFile(event.target.files[0])
     }
 
     readFile = (fileInfo) => {
@@ -12,41 +18,29 @@ export default class ImageContainer extends Component {
             return alert('Please upload an image')
         }
 
-        const {fileReader} = this.props
+        const { dispatch } = this.props
+
+        const fileReader = new FileReader()
 
         fileReader.onload = (event) => {
             const image = new Image()
             image.src = event.target.result
             image.name = fileInfo.name
-            image.onload = () => this.props.onImageLoad(image)
-            this.setState({isImageUploaded: true})
-        };
+            image.onload = () => dispatch(imageUploaded(image))
+        }
 
         fileReader.readAsDataURL(fileInfo)
     }
 
-    preventLoadFileAsNewPage(event) {
-        event.preventDefault()
-    }
-
-    onDrop = (event) => {
-        this.readFile(event.dataTransfer.files[0])
-        event.preventDefault()
-    }
-
-    onInputChange = (event) => {
-        this.readFile(event.target.files[0])
-    }
-
     render() {
-        const {isImageUploaded} = this.state
+        const { isImageUploaded } = this.props
 
         return (
             <div className='image-container'
-                 onDragOver={this.preventLoadFileAsNewPage}
+                 onDragOver={event => event.preventDefault()}
                  onDrop={this.onDrop}
             >
-                <canvas ref='canvas'/>
+                <canvas id={'test'}/>
                 {isImageUploaded || <p className="help-message">Drop an image here or <label htmlFor="image-upload">select manually</label></p>}
                 <form encType="multipart/form-data">
                     <input
@@ -61,7 +55,8 @@ export default class ImageContainer extends Component {
     }
 }
 
-ImageContainer.propTypes = {
-    onImageLoad: PropTypes.func,
-    fileReader: PropTypes.object.isRequired
-}
+export default connect(
+    state => ({
+        isImageUploaded: !! state.canvas.present.image
+    })
+)(ImageContainer)

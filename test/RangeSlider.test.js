@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import RangeSlider from '../../src/component/RangeSlider/RangeSlider'
+import RangeSlider from '../src/component/RangeSlider/RangeSlider'
 
 describe('<RangeSlider/>', () => {
     const rangeSliderProps = {

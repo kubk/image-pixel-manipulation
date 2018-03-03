@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Draggable from 'react-draggable'
 import './Dialog.css'
 
+// TODO: rename to popup
 export default class Dialog extends Component {
     onDragStart(event) {
         // Prevent dialog dragging when target is an input tag
@@ -11,13 +12,8 @@ export default class Dialog extends Component {
         }
     }
 
-    onOk = () => {
-        this.props.onOk()
-        this.props.onCancel()
-    }
-
     render() {
-        const {onCancel, text} = this.props;
+        const { text, onConfirm, onClose } = this.props
 
         return (
             <div className="pop-up">
@@ -25,8 +21,8 @@ export default class Dialog extends Component {
                   <div className="pop-up__body">
                     <p className="pop-up__text">{text}</p>
                     {this.props.children}
-                    <button title="Ok" className="pop-up__button" onClick={this.onOk}>Ok</button>
-                    <button title="Cancel" className="pop-up__button" onClick={onCancel}>Close</button>
+                    <button title="Ok" className="pop-up__button" onClick={() => { onConfirm(); onClose() }}>Ok</button>
+                    <button title="Cancel" className="pop-up__button" onClick={onClose}>Close</button>
                   </div>
                 </Draggable>
             </div>
@@ -36,6 +32,6 @@ export default class Dialog extends Component {
 
 Dialog.propTypes = {
     text: PropTypes.string,
-    onOk: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
 }

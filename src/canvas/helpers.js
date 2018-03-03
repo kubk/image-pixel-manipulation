@@ -1,10 +1,15 @@
 /**
- * @param {string} base64
- * @param {string} imageName
+ * @param {string|null} imageName
  */
-export function downloadImage(base64, imageName) {
+export function downloadCanvasImage(imageName) {
+    const canvas = document.querySelector('canvas')
+
+    if (!canvas || !imageName) {
+        return
+    }
+
     const link = document.createElement('a')
-    link.href = base64
+    link.href = canvas.toDataURL()
     link.download = imageName
     // In Firefox we need explicitly add new link element to the DOM, otherwise click() will not work
     document.body.appendChild(link)
